@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>鲸鱼的二十岁生日祝福</title>
+<style>
+  /* 页面整体背景，渐变蓝色，模拟海洋 */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #a0d8ef, #6fb1fc);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    overflow: hidden;
+  }
+
+  /* 星光动画效果（漂浮的泡泡） */
+  .bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .bubble {
+    position: absolute;
+    bottom: -150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    animation: rise 20s linear infinite;
+  }
+
+  @keyframes rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-120vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  /* 鲸鱼图片或图标（可替换为PNG图像） */
+  .whale-img {
+    width: 150px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* 祝福标题 */
+  h1 {
+    font-size: 3em;
+    margin: 10px 20px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.3);
+  }
+
+  /* 祝福内容 */
+  p {
+    font-size: 1.3em;
+    line-height: 1.6;
+    max-width: 600px;
+    text-align: center;
+    margin: 20px;
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+  }
+
+  /* 装饰的海浪或泡泡效果 */
+  .footer {
+    margin-top: 30px;
+    font-size: 1em;
+    color: #e0f7fa;
+    text-shadow: 0 0 4px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<!-- 动态泡泡背景 -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- 鲸鱼图片（可以换成你喜欢的图标或图片） -->
+<img src="https://img.icons8.com/emoji/480/whale-emoji.png" alt="鲸鱼" class="whale-img" />
+
+<h1>祝你，鲸鱼，二十岁生日快乐！</h1>
+
+<p>
+在这片碧蓝的大海中，愿你的未来像海水一样纯净、宽广。<br>
+愿你的每一个梦想都如海底的珍珠般珍贵闪亮。<br>
+祝你二十岁，青春永驻，幸福满溢！
+</p>
+
+<div class="footer">
+来自最美的祝福，愿你一生海阔天空，快乐无限！
+</div>
+
+<script>
+  // 生成随机泡泡
+  const bubbleContainer = document.getElementById('bubbles');
+
+  function createBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+
+    // 设置随机位置
+    const size = Math.random() * 20 + 10; // 10px到30px
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+
+    bubble.style.left = Math.random() * 100 + '%';
+
+    // 设置动画持续时间
+    const duration = Math.random() * 15 + 10; // 10s到25s
+    bubble.style.animationDuration = duration + 's';
+
+    // 设置颜色渐变
+    bubble.style.background = `rgba(255,255,255,${Math.random() * 0.3 + 0.2})`;
+
+    bubbleContainer.appendChild(bubble);
+
+    // 每隔一定时间创建泡泡
+    setTimeout(() => {
+      if (bubble.parentNode) {
+        bubble.parentNode.removeChild(bubble);
+      }
+    }, duration * 1000);
+  }
+
+  // 定期生成泡泡
+  setInterval(createBubble, 300);
+</script>
+
+</body>
+</html>
