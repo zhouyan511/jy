@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>二十岁生日快乐，鲸鱼</title>
+<style>
+  /* 页面整体背景：深邃的克莱因蓝 */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #3B9D9B; /* 克莱因蓝色调 */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #f0f8ff; /* 浅色字体，突出高级感 */
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* 浮动泡泡动画，模拟海水的微光 */
+  .bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  .bubble {
+    position: absolute;
+    bottom: -150px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    animation: rise 25s linear infinite;
+  }
+  @keyframes rise {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-120vh) scale(0.5);
+      opacity: 0;
+    }
+  }
+
+  /* 茉莉花图案装饰（左上角和右下角） */
+  .jasmine {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+  }
+  .jasmine-top-left {
+    top: 20px;
+    left: 20px;
+    transform: rotate(-15deg);
+  }
+  .jasmine-bottom-right {
+    bottom: 20px;
+    right: 20px;
+    transform: rotate(15deg);
+  }
+
+  /* 高级文字排版 */
+  .content {
+    text-align: center;
+    padding: 20px;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+
+  h1 {
+    font-size: 2.8em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+  }
+
+  p {
+    font-size: 1.4em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* 小字行 */
+  .small-line {
+    font-size: 1em;
+    font-style: italic;
+    color: #f0f8ff;
+  }
+
+  /* 浮动动画 */
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- 浮动泡泡背景 -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- 茉莉花图案点缀 -->
+<img src="https://cdn-icons-png.flaticon.com/512/2900/2900708.png" alt="茉莉花" class="jasmine jasmine-top-left" />
+<img src="https://cdn-icons-png.flaticon.com/512/2900/2900708.png" alt="茉莉花" class="jasmine jasmine-bottom-right" />
+
+<!-- 核心内容区 -->
+<div class="content">
+  <h1>二十岁生日快乐，鲸鱼</h1>
+  <p>愿你天天开心，岁岁平安。</p>
+  <p class="small-line">送君茉莉，请君莫离</p>
+</div>
+
+<script>
+  // 生成泡泡效果
+  const bubbleContainer = document.getElementById('bubbles');
+  function createBubble() {
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+
+    const size = Math.random() * 20 + 10; // 10px到30px
+    bubble.style.width = size + 'px';
+    bubble.style.height = size + 'px';
+
+    bubble.style.left = Math.random() * 100 + '%';
+
+    const duration = Math.random() * 20 + 15; // 15s到35s
+    bubble.style.animationDuration = duration + 's';
+
+    bubble.style.background = `rgba(255,255,255,${Math.random() * 0.2 + 0.1})`;
+
+    bubbleContainer.appendChild(bubble);
+
+    setTimeout(() => {
+      if (bubble.parentNode) {
+        bubble.parentNode.removeChild(bubble);
+      }
+    }, duration * 1000);
+  }
+
+  setInterval(createBubble, 300);
+</script>
+
+</body>
+</html>
