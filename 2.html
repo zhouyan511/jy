@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>中奖通知</title>
+<!-- 使用更圆润的字体 -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+<!-- 也保留之前的可爱字体备用 -->
+<style>
+  /* 全局样式 */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Pacifico', cursive;
+    background: linear-gradient(135deg, #ffd7e0, #b2f0f9);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px;
+  }
+
+  /* 背景动画 */
+  body::before {
+    content: "";
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(270deg, #f9d423, #ff4e50, #fbc531, #4facfe, #00f2fe);
+    background-size: 600% 600%;
+    animation: gradientShift 20s ease infinite;
+    z-index: -1;
+  }
+
+  @keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+  }
+
+  /* 容器样式 */
+  .container {
+    background: rgba(255,255,255,0.85);
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    max-width: 90%;
+    width: 350px;
+    text-align: center;
+    animation: popIn 1s ease-out;
+  }
+
+  @keyframes popIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  h1 {
+    font-size: 2em;
+    color: #ff6f61;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+  }
+
+  /* 更圆润字体的主要文本 */
+  p {
+    font-size: 1.2em;
+    color: #333;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }
+
+  /* 按钮样式 */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Pacifico', cursive; /* 圆润字体 */
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .btn-yes {
+    background: linear-gradient(135deg, #81ecec, #00b894);
+    color: #fff;
+  }
+
+  .btn-no {
+    background: linear-gradient(135deg, #fab1a0, #fd79a8);
+    color: #fff;
+  }
+
+  .btn:hover {
+    transform: scale(1.05);
+  }
+
+  /* 喝酒券样式 */
+  .voucher {
+    width: 100%;
+    padding: 20px;
+    background: #fff8dc;
+    border: 4px dashed #f39c12;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    margin-top: 20px;
+    font-family: 'Pacifico', cursive; /* 圆润字体 */
+    position: relative;
+    animation: floatUp 1s ease-out;
+  }
+
+  @keyframes floatUp {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  .voucher h2 {
+    font-size: 1.5em;
+    color: #e67e22;
+    margin-bottom: 10px;
+  }
+
+  .voucher p {
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  /* 按钮“再试一次” */
+  #restartBtn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1em;
+    background: #6c5ce7;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  #restartBtn:hover {
+    background: #a29bfe;
+    transform: scale(1.05);
+  }
+
+  /* “可惜”提示字体样式 */
+  .message {
+    font-size: 1.5em;
+    color: #2d3436;
+    margin-top: 20px;
+  }
+
+  /* 媒体查询 */
+  @media(max-width: 400px){
+    .container {
+      width: 90%;
+      padding: 20px 15px;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    .btn {
+      font-size: 1em;
+      padding: 10px 20px;
+    }
+    .voucher h2 {
+      font-size: 1.2em;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+  <h1>恭喜你开出隐藏惊喜</h1>
+  <p>是否领取奖励</p>
+  <div class="buttons">
+    <button class="btn btn-yes" id="yesBtn">Yes</button>
+    <button class="btn btn-no" id="noBtn">No</button>
+  </div>
+</div>
+
+<!-- 这里用来显示喝酒券 -->
+<div class="container" id="voucherContainer" style="display:none;"></div>
+
+<!-- “可惜”提示 -->
+<div class="container" id="sorryContainer" style="display:none;">
+  <div class="message">真的吗，再选一次</div>
+  <button id="restartBtn">再试一次</button>
+</div>
+
+<script>
+  const mainContainer = document.getElementById('mainContainer');
+  const voucherContainer = document.getElementById('voucherContainer');
+  const sorryContainer = document.getElementById('sorryContainer');
+
+  document.getElementById('yesBtn').addEventListener('click', () => {
+    // 显示喝酒券
+    mainContainer.style.display = 'none';
+    voucherContainer.innerHTML = `
+      <div class="voucher">
+        <h2>喝酒券</h2>
+        <p>凭此券，可享受一次免费请你喝酒（不折现哦）！</p>
+        <p style="margin-top:15px;">祝你好运！🍻</p>
+      </div>
+    `;
+    voucherContainer.style.display = 'block';
+  });
+
+  document.getElementById('noBtn').addEventListener('click', () => {
+    // 显示“再选一次”
+    mainContainer.style.display = 'none';
+    sorryContainer.style.display = 'block';
+    document.querySelector('.message').textContent = '真的吗，再选一次';
+  });
+
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    // 重置页面
+    sorryContainer.style.display = 'none';
+    mainContainer.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
